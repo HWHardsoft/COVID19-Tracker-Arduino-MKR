@@ -39,15 +39,14 @@ Enter your WiFi SSID & password in the fields in the WiFi section:
 ## SSL certificates
 The tracker is using SSL communication with the website worldometers.info It is necessary needed to add this URL via the WiFi101 / WiFiNINA Firmware Updater of the Arduino IDE to the Arduino MKR WiFi 1010 board
 
-![My image](https://hackster.imgix.net/uploads/attachments/1089828/grafik_eRLuAc5tGD.png?auto=compress%2Cformat&w=680&h=510&fit=max)
+![My image](https://hackster.imgix.net/uploads/attachments/1089827/grafik_5hEqived4T.png?auto=compress%2Cformat&w=740&h=555&fit=max)
 
 
 ## Country settings
 
 You can change/add/delete the countries in the main loop of the program according your interests.
 
-![My image](https://hackster.imgix.net/uploads/attachments/1089827/grafik_5hEqived4T.png?auto=compress%2Cformat&w=740&h=555&fit=max)
-
+![My image](https://hackster.imgix.net/uploads/attachments/1089828/grafik_eRLuAc5tGD.png?auto=compress%2Cformat&w=680&h=510&fit=max)
 
 
 # License
