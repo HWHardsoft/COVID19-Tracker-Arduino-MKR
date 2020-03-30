@@ -25,13 +25,16 @@
 #include <ArduinoHttpClient.h>
 #include "Adafruit_GFX.h"
 #include "Adafruit_ILI9341.h"
-
+//#include <XPT2046_Touchscreen.h>
+//#include <Fonts/FreeSansBold9pt7b.h>
+//#include "usergraphics.h"
 /*______End of Libraries_______*/
 
 /*__Pin definitions for the Arduino MKR__*/
 #define TFT_CS   A3
 #define TFT_DC   0
 #define TFT_MOSI 8
+//#define TFT_RST  22
 #define TFT_CLK  9
 #define TFT_MISO 10
 #define TFT_LED  A2  
@@ -56,7 +59,7 @@
 /*____Wifi _____________________*/
 ///////please enter your sensitive data in the Secret tab/arduino_secrets.h
 char ssid[] = "ssid";        // your network SSID (name)
-char pass[] = "pass";       // your network password (use for WPA, or use as key for WEP)
+char pass[] = "pass";    // your network password (use for WPA, or use as key for WEP)
 int keyIndex = 0;            // your network key Index number (needed only for WEP)
 // Number of milliseconds to wait without receiving any data before we give up
 const int kNetworkTimeout = 30*1000;
@@ -79,11 +82,9 @@ Adafruit_ILI9341 tft = Adafruit_ILI9341(TFT_CS, TFT_DC);
 
 void setup() {
   //Initialize serial and wait for port to open:
+  delay(1000);
   Serial.begin(9600);
-  while (!Serial) {
-    ; // wait for serial port to connect. Needed for native USB port only
-  }
-
+ 
   // init GPIOs
   pinMode(TFT_LED, OUTPUT); // define as output for backlight control
 
@@ -128,6 +129,8 @@ void setup() {
 
 void loop() {
  check_country("China");
+ delay(2000);
+ check_country("US");
  delay(2000);
  check_country("Italy");
  delay(2000); 
@@ -219,7 +222,7 @@ void check_country(String sCountry) {
           {
               c = http.read();
               s2 = s2 + c;
-              if (readcounter < 255) {
+              if (readcounter < 300) {
                 readcounter++;
               } else {
                 readcounter = 0;
