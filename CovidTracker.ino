@@ -1,6 +1,6 @@
 /*
  *  Application note: Covid 19 tracker for AZ-Touch and Arduino MKR WiFi 1010
- *  Version 1.0
+ *  Version 1.1
  *  Copyright (C) 2020  Hartmut Wendt  www.zihatec.de
  *  
  *
@@ -25,16 +25,12 @@
 #include <ArduinoHttpClient.h>
 #include "Adafruit_GFX.h"
 #include "Adafruit_ILI9341.h"
-//#include <XPT2046_Touchscreen.h>
-//#include <Fonts/FreeSansBold9pt7b.h>
-//#include "usergraphics.h"
 /*______End of Libraries_______*/
 
 /*__Pin definitions for the Arduino MKR__*/
 #define TFT_CS   A3
 #define TFT_DC   0
 #define TFT_MOSI 8
-//#define TFT_RST  22
 #define TFT_CLK  9
 #define TFT_MISO 10
 #define TFT_LED  A2  
@@ -128,9 +124,9 @@ void setup() {
 }
 
 void loop() {
- check_country("China");
- delay(2000);
  check_country("US");
+ delay(2000);
+ check_country("UK");
  delay(2000);
  check_country("Italy");
  delay(2000); 
@@ -138,9 +134,9 @@ void loop() {
  delay(2000); 
  check_country("Spain");
  delay(2000); 
- check_country("Austria");
+ check_country("Russia");
  delay(2000); 
- check_country("Switzerland");
+ check_country("Brazil");
  delay(2000); 
 }
 
@@ -149,33 +145,33 @@ void draw_country_screen(String sCountry){
   tft.fillScreen(ILI9341_BLACK);// clear screen
 
   // headline
-  tft.setCursor(10,10);
+  tft.setCursor(5,10);
   tft.setTextColor(ILI9341_WHITE);
   tft.setTextSize(3);
   tft.print(sCountry + ":");
 
   // infected
-  tft.setCursor(10,70);
+  tft.setCursor(5,70);
   tft.setTextColor(ILI9341_RED);
   tft.print("Infected:");
-  tft.setCursor(200,70);
+  tft.setCursor(190,70);
   tft.print(infected);
 
   // recovered
-  tft.setCursor(10,130);
+  tft.setCursor(5,130);
   tft.setTextColor(ILI9341_GREEN);
   tft.print("Recovered:");
-  tft.setCursor(200,130);
+  tft.setCursor(190,130);
   tft.print(recovered);
 
   // deaths
-  tft.setCursor(10,190);
+  tft.setCursor(5,190);
   tft.setTextColor(ILI9341_LIGHTGREY);
   tft.print("Deaths:");
-  tft.setCursor(200,190);
-  tft.print(deaths); 
-      
+  tft.setCursor(190,190);
+  tft.print(deaths);
 }
+
 
 void check_country(String sCountry) {
   int err =0;
@@ -238,6 +234,7 @@ void check_country(String sCountry) {
                     tempString = s2.substring(s2.indexOf("#aaa") + 6);
                     s1 = tempString.substring(0, (tempString.indexOf("</")));
                     s1.remove(s1.indexOf(","),1);  
+                    s1.remove(s1.indexOf(","),1); // for large 7 digit numbers
                     Serial.print("Coronavirus Cases: ");
                     Serial.println(s1);
                     infected = s1.toInt();
@@ -253,6 +250,7 @@ void check_country(String sCountry) {
                     tempString = s2.substring(s2.indexOf("<span>") + 6);
                     s1 = tempString.substring(0, (tempString.indexOf("</")));
                     s1.remove(s1.indexOf(","),1);  
+                    s1.remove(s1.indexOf(","),1); // for large 7 digit numbers
                     Serial.print("Deaths: ");
                     Serial.println(s1);
                     deaths = s1.toInt();
@@ -265,7 +263,8 @@ void check_country(String sCountry) {
                     s2 = tempString.substring(place + 15);
                     tempString = s2.substring(s2.indexOf("<span>") + 6);
                     s1 = tempString.substring(0, (tempString.indexOf("</")));
-                    s1.remove(s1.indexOf(","),1);  
+                    s1.remove(s1.indexOf(","),1); 
+                    s1.remove(s1.indexOf(","),1); // for large 7 digit numbers 
                     Serial.print("Recovered: ");
                     Serial.println(s1);
                     recovered = s1.toInt();
